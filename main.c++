@@ -30,20 +30,20 @@ public:
 
 void BoarderCheck();
 
-class playerMovement {
-public:
-    void updateMovement(Fish &fish) {
-        if (IsKeyDown(KEY_RIGHT)) {
-            fish.velocity.x += fish.speed;
-        } else if (IsKeyDown(KEY_LEFT)) {
-            fish.velocity.x -= fish.speed;
-        } else if (IsKeyDown(KEY_UP)) {
-            fish.velocity.y -= fish.speed;
-        } else if (IsKeyDown(KEY_DOWN)) {
-            fish.velocity.y += fish.speed;
+void PlayerCollision(Fish &playerFish, std::vector<Fish> &npcFish) {
+    // collision between playerFish and npcFish. if true. push npcFish away from playerFish
+    for (auto &fish : npcFish) {
+        float distance = sqrt(pow(playerFish.position.x - fish.position.x, 2) + pow(playerFish.position.y - fish.position.y, 2));
+        if (distance < playerFish.radius + fish.radius) {
+            Vector2 direction = { playerFish.position.x - fish.position.x, playerFish.position.y - fish.position.y };
+            float length = sqrt(pow(direction.x, 2) + pow(direction.y, 2));
+            direction.x /= length;
+            direction.y /= length;
+            fish.position.x -= direction.x * 2;
+            fish.position.y -= direction.y * 2;
         }
     }
-};
+}
 
 void update() {
     FishMovement fishMovement;
@@ -54,6 +54,8 @@ void update() {
     fishMovement.flock(npcFish);
 
     DrawCircleV(playerFish.position, playerFish.radius, playerFish.color);
+
+    PlayerCollision(playerFish, npcFish);
 
     BoarderCheck();
 }
@@ -96,11 +98,12 @@ void start() {
     const int screenWidth = 1280;
     const int screenHeight = 900;
 
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(screenWidth, screenHeight, "Fiske Flok");
 
     SetTargetFPS(120);
 
-    spawnNpcFish(npcFish, 100);
+    spawnNpcFish(npcFish, 30);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -113,6 +116,62 @@ void start() {
         }
 
         EndDrawing();
+
+        // keybindings for spawning npcFish
+        if (IsKeyPressed(KEY_SPACE)) {
+            spawnNpcFish(npcFish, 1);
+        } else if (IsKeyPressed(KEY_BACKSPACE)) {
+            npcFish.pop_back();
+        } else if (IsKeyPressed(KEY_R)) {
+            npcFish.clear();
+            spawnNpcFish(npcFish, 5);
+        }
+
+        // keybindings for UI
+        if (IsKeyPressed(KEY_F)){
+            ToggleFullscreen();
+        } 
+
+        // keybindings for help menu 
+        if (IsKeyPressed(KEY_H)) {
+            const char* helpText[] = {
+                "Press SPACE to spawn a fish",
+                "Press BACKSPACE to remove a fish",
+                "Press R to reset the fish",
+                "Press F to toggle fullscreen",
+                "Press H to show this help menu"
+            };
+
+            const int numLines = sizeof(helpText) / sizeof(helpText[0]);
+            const int fontSize = 20;
+            const int padding = 10;
+            const int boxWidth = 400;
+            const int boxHeight = (fontSize + padding) * numLines + padding;
+            const int boxX = (GetScreenWidth() - boxWidth) / 2;
+            const int boxY = (GetScreenHeight() - boxHeight) / 2;
+
+            DrawRectangle(boxX, boxY, boxWidth, boxHeight, Fade(BLACK, 0.7f));
+            for (int i = 0; i < numLines; ++i) {
+                DrawText(helpText[i], boxX + padding, boxY + padding + i * (fontSize + padding), fontSize, WHITE);
+            }
+
+            // Wait for a couple of seconds
+            float startTime = GetTime();
+            while (GetTime() - startTime < 3.0f) {
+                BeginDrawing();
+                ClearBackground(BLUE);
+
+                // Redraw the help menu
+                DrawRectangle(boxX, boxY, boxWidth, boxHeight, Fade(BLACK, 0.7f));
+                for (int i = 0; i < numLines; ++i) {
+                    DrawText(helpText[i], boxX + padding, boxY + padding + i * (fontSize + padding), fontSize, WHITE);
+                }
+
+                EndDrawing();
+            }
+        }
+
+
     }
 
     CloseWindow();
