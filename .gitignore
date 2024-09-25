@@ -49,3 +49,7 @@
 *.swp
 *.DS_Store
 Thumbs.db
+
+# main executable and main.dSYM folder
+main
+main.dSYM/

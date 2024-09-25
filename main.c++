@@ -6,8 +6,8 @@
 #include <vector>
 
 // own headers and files
-#include "Fish.hpp"
-#include "FishMovement.hpp"
+#include "include/Fish.hpp"
+#include "include/FishMovement.hpp"
 
 // main character (me)
 Fish playerFish = { { 400, 200 }, { 0, 0 }, 0.1, 20, GREEN };

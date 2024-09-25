@@ -9,8 +9,8 @@
                 "-fansi-escape-codes",
                 "-g",
                 "${file}",
-                "${fileDirname}/Fish.cpp", // Include Fish.cpp in the build
-                "${fileDirname}/FishMovement.cpp", // Include Fish.cpp in the build
+                "${fileDirname}/include/Fish.cpp", // Include Fish.cpp in the build
+                "${fileDirname}/include/FishMovement.cpp", // Include Fish.cpp in the build
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-L/opt/homebrew/lib",  // Separate this flag

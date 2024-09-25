@@ -10,7 +10,7 @@ void spawnNpcFish(std::vector<Fish> &npcFish, int count) {
               static_cast<float>(GetRandomValue(0, GetScreenHeight() - 100)) + offsetY }, 
             { 0, 0 }, 
             2.0f, 
-            15.0f, 
+            10.0f, 
             ORANGE 
         };
         npcFish.push_back(fish);
