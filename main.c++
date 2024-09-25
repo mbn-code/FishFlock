@@ -54,6 +54,8 @@ void update() {
     fishMovement.flock(npcFish);
 
     DrawCircleV(playerFish.position, playerFish.radius, playerFish.color);
+
+    BoarderCheck();
 }
 
 void BoarderCheck() {
@@ -91,8 +93,8 @@ void BoarderCheck() {
 }
 
 void start() {
-    const int screenWidth = 1650;
-    const int screenHeight = 1280;
+    const int screenWidth = 1280;
+    const int screenHeight = 900;
 
     InitWindow(screenWidth, screenHeight, "Fiske Flok");
 
@@ -102,7 +104,7 @@ void start() {
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLUE);
 
         update();
 

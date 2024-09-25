@@ -1,0 +1,51 @@
+# Visual Studio Code
+.vscode/
+.vscode/*
+
+# Compiled object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Other files and folders to ignore
+*.log
+*.cache
+*.pyc
+*.pyo
+*.pyd
+*.class
+*.swo
+*.swp
+*.DS_Store
+Thumbs.db

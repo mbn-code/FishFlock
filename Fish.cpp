@@ -11,7 +11,7 @@ void spawnNpcFish(std::vector<Fish> &npcFish, int count) {
             { 0, 0 }, 
             2.0f, 
             15.0f, 
-            BLUE 
+            ORANGE 
         };
         npcFish.push_back(fish);
     }
